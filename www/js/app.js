@@ -1,24 +1,61 @@
-// Ionic Starter App
+angular.module('pocket_series', ['ionic'])
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+.controller('VideosCtrl', function($scope, $http) {
+  $scope.base_url = "https://www.googleapis.com/youtube/v3/";
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+  $scope.video_list = [
+    { title: 'Miragem' },
+    { title: 'Copas & espadas' },
+    { title: 'Nada Importante' },
+    { title: 'Efemero' }
+  ];
 
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
-      cordova.plugins.Keyboard.disableScroll(true);
+
+  $scope.addToVideoList = function(video_itens) {
+      for(var i=0;  i<itens.length; i++) {
+          if($scope.controlId.indexOf(itens[i].game_id) == -1) {
+              $scope.gameList.push(itens[i]);
+          }
+      }        
+  }
+
+  $scope.get_url = function(service) {
+    var url = $scope.base_url;
+    // Remove null falues
+    for (var key in $scope.params) {
+       if ($scope.params[key] == null) {
+          delete $scope.params[key];
+       }
     }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
+    var qs = $.param($scope.params);
+    
+    console.log(url + "?" + qs);
+    return url +"/"+ service +"/"+ "?" + qs;
+  }
+
+  $scope.getVideos = function() {
+    $scope.params = {
+        "part" : "snippet",
+        "maxResults" : 10,
+        "playlistId" : "CUO_YglGmN3L4pUPw",
+        "key" : "AIzaSyAf5H9oq3MKgDk3AWoU6KvxGYZ5amNSLx8"
+    };
+    $scope.params.callback = "videoListCallback";
+
+    var url = $scope.get_url();
+    $http.jsonp(url).then(
+            function(s) { $scope.success = JSON.stringify(s); }, 
+            function(e) { $scope.error = JSON.stringify(e); }
+    );
+    //https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=UUUYcp-CUO_YglGmN3L4pUPw&key=AIzaSyAf5H9oq3MKgDk3AWoU6KvxGYZ5amNSLx8
+  }
+});
+
+function videoListCallback(data) {
+    clearErrorMessage();
+    clearSuccessMessage();
+
+    if(data.data instanceof Array) {
+        window.angular.element(document.getElementById('game-controller')).scope().addToGameList(data.data, false);
     }
-  });
-})
+}
