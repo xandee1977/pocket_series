@@ -6,30 +6,29 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
   <!-- Needed for Cordova/PhoneGap (will be a 404 during development) -->
   <script src="cordova.js"></script>
+  
+  <script src="js/jquery-2.2.1.min.js"></script>
   <script src="js/app.js"></script>
 </head>
 
-<body ng-app="pocket_series" ng-controller="VideosCtrl">
+<body ng-app="pocket_series" id="VideosCtrl" ng-controller="VideosCtrl">
   <ion-side-menus>
-
     <!-- Center content -->
     <ion-side-menu-content>
       <ion-header-bar class="bar-dark">
-        <h1 class="title">Videos</h1>
+        <h1 class="title">Pocket Videos</h1>
       </ion-header-bar>
+      
       <ion-content>
-        <!-- our list and list items -->
-        <ion-list>
-          <ion-item ng-repeat="video in video_list">
-            {{video.title}}
-          </ion-item>
-        </ion-list>
+          <ng-include src="current_view"></ng-include>
       </ion-content>
+
     </ion-side-menu-content>
 
     <!-- Left menu -->
@@ -38,7 +37,7 @@
         <h1 class="title">Projects</h1>
       </ion-header-bar>
     </ion-side-menu>
-    
+
   </ion-side-menus>
 </body>
 </html>

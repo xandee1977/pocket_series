@@ -1,0 +1,15 @@
+<!-- List of videos -->
+<ion-list>
+  <ion-item ng-repeat="video in video_list">
+    <div class="snipped">
+      <div class="thumb">
+      	<a href="#" ng-click="videoDetail('{{ video.snippet.resourceId.videoId }}')">
+      		<img src="{{ video.snippet.thumbnails.default.url }}" width="{{ video.snippet.thumbnails.default.width }}" height="{{ video.snippet.thumbnails.default.height }}" /></div>
+		</a>      		
+      <div class="text">
+        <p class="title">{{video.snippet.title}}</p>
+        <p class="description">{{video.snippet.description | limitTo: 40}}{{video.snippet.description.length > 40 ? '...' : ''}}</p>
+      </div>
+    </div>
+  </ion-item>
+</ion-list>

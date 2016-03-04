@@ -1,1 +1,34 @@
-/* Empty. Add your own CSS if you like */
+body {    
+    font-family: Helvetica;
+}
+
+div.snipped {
+    position:relative;
+}
+
+div.snipped .thumb {
+    float: left;
+    display: block;
+    margin-right: 10px;
+}
+
+p.title {
+    font-size: 17px;
+    font-weight: bolder;
+    white-space: normal;
+}
+
+p.description {
+    white-space: normal;
+    text-align: left;
+}
+
+iframe.playerFrame {
+    overflow:hidden;
+    height:100%;
+    width:100%
+}
+
+div.videoDetail {
+    padding: 5px;
+}
